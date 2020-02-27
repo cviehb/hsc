@@ -1,0 +1,84 @@
+#+Author: Christoph Viehboeck
+#+TITLE: Graphen
+
+* Bernstein
+Finde alle Abhängigkeiten für den gegebenen Algorithmus.
+
+#+BEGIN_SRC fundamental
+A1: d = b ∗ c;
+A2: e = a + b;
+A3: b = b ∗ c;
+A4: a = e − d;
+A5: d = f + c;
+A6: b = a + f;
+#+END_SRC
+
+** Graph
+Beschreibe den Graph.
+
+#+BEGIN_SRC dot :file Bernstein.png :cmdline -Kdot -Tpng
+  digraph Bernstein {
+	  node[shape=circle];
+	  A1, A2, A3, A4, A5, A6;
+	  node[shape=none];
+	  a, b, c, d, e;
+	
+	  b->A1;
+	  c->A1;
+	  a->A2;
+	  b->A2;
+	  A1->A4[label=d];
+	  A2->A4[label=e];
+	  A4->A6[label=a];
+	  f->A6;
+	  f->A5; 
+	  c->A5;
+	  b->A3;
+	  c->A3;
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:Bernstein.png]]
+
+* SystemC
+Siehe dazu die Folie 29 aus heterogene Modelle.
+
+** Kontrollfluss
+#+BEGIN_SRC dot :file Kontrollfluss.png :cmdline -Kdot -Tpng
+  digraph Kontrollfluss {
+	  node[shape=circle];
+	  1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12;
+	  
+	  11->1;
+	  1->2[label="e > f"];
+	  1->12;
+	  2->3[label="com == true"];
+	  3->4->5->6->7->8;
+	  8->1;
+	  2->9->10->11;
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:Kontrollfluss.png]]
+
+** Datenfluss
+#+BEGIN_SRC dot :file Datenfluss.png :cmdline -Kdot -Tpng
+  digraph Datenfluss {
+	  node[shape=circle];
+	  A1, A2, A3, A4, A5, A6;
+	  node[shape=none];
+	  a, b, c, d, e;
+  }
+#+END_SRC
+
+** Sequenz
+#+BEGIN_SRC dot :file Sequenz.png :cmdline -Kdot -Tpng
+  digraph Sequenz {
+	  node[shape=circle];
+	  A1, A2, A3, A4, A5, A6;
+	  node[shape=none];
+	  a, b, c, d, e;
+  }
+#+END_SRC

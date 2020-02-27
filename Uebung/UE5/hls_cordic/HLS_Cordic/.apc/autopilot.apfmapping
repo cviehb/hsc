@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<autopilotfilemapping:AutoPilotFileMapping xmlns:autopilotfilemapping="www.autoesl.com/autopilotfilemapping">
+  <source>
+    <originFiles name="cc_cordicModule_fixed.cpp" path="/home/christoph/FH_Hagenberg/Semester8/HSC8/hsc8_repo/Uebung/UE5/hls_cordic/cc_cordicModule_fixed.cpp"/>
+  </source>
+  <testbench>
+    <originFiles name="testbench_cc_cordicModule_fixed.cpp" path="/home/christoph/FH_Hagenberg/Semester8/HSC8/hsc8_repo/Uebung/UE5/hls_cordic/testbench_cc_cordicModule_fixed.cpp"/>
+  </testbench>
+</autopilotfilemapping:AutoPilotFileMapping>

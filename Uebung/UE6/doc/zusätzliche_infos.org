@@ -1,0 +1,38 @@
+#+Author: Christoph Viehboeck
+#+TITLE: HSC Infos zu UE6
+#+EMAIL: s1810567023@students.fh-hagenberg.at
+
+#+OPTIONS: tex:t latex:t tex:verbatim
+#+OPTIONS: ':t -:t toc:nil
+
+#+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+REVEAL_HLEVEL: 1
+#+REVEAL_TRANS: fade
+#+REVEAL_THEME: simple
+
+* Interrupts
+
+- Hinzufügen eines Interrupts in den Cordic Core
+- HLS Synthese mit Interrupt
+- SC_Thread sensitiv auf bool Leitung
+- Interrupt muss auch rückgesetzt werden
+- IRQ Handling
+- Design Erklärung
+
+* Firmware
+
+Handling der Interrupts in der Firmware soll gleich dem des Timers
+erfolgen. Daher sollten wie beschrieben die Funktionen implementiert
+werden.
+
+- Aufbau der FW als wenn diese auf HW läuft
+- Alle Strukturen Schnittstellen gleich
+- Basisadressen
+
+Einfacher Austausch der API wenn VP fertig ist und auf der HW
+verwendet werden kann.
+
+- Naming: X<instance>_<function>
+- Error Handling für die Berechnung 
+  - Erweiterung Rückgabewert
+  - Interrupt wait loop

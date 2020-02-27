@@ -1,0 +1,221 @@
+#+Author: Christoph Viehboeck, Martin Schram
+#+TITLE: Documentation Model
+#+EMAIL: s1510306040@students.fh-hagenberg.at
+#+DATE:  2018-07-12
+#+OPTIONS: tex:t latex:t tex:verbatim
+#+OPTIONS: ':t -:t toc:nil
+#+OPTIONS: ^:nil
+#+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/2.5.0/
+
+* General
+All the Development work is done on a standard Linux Distribution with
+the major help of following tools
+
+- cmake
+- g++
+- systemc
+
+Make sure you have installed all dependencies and check if the tools
+are realy working.
+
+** Developers
+
+- Christoph Viehboeck
+- Martin Schram
+
+** Documentation
+Is done with the help of emacs and inline shell commands, means all
+the models are executed in the doc and printed directly to the
+documentation. No copy paste error and all simulations are at least
+recent states.
+
+** Start Simulation
+In every of the subfolders are a build.sh located which will generate
+a Makefile and execute make to compile the project. The target is
+located in the subfolder bin when done the build script.
+
+- note: big trace and log files
+- transactions are randomized (localtime)
+
+** SystemC 
+The systemc header and lib files should be located under following path:
+
+#+BEGIN_SRC shell :exports results
+cd /usr/local/systemc-2.3.2/ && pwd
+#+END_SRC
+
+#+RESULTS:
+: /usr/local/systemc-2.3.2
+
+If not present, the CMakeLists.txt can be adapted to the necessary
+needs.
+
+* Cycle Model
+Lines of Code from Cycle Model. This model represents an equivalent
+RTL Model with full timing requirements. All the transactions are done
+random with random wait and access timings.
+
+** LOC
+
+#+BEGIN_SRC shell :exports both
+find ../cycle_master_slave/ -type f \( -name \*.cpp -o -name \*.h \) | xargs wc -l
+#+END_SRC
+
+#+RESULTS:
+|   45 | ../cycle_master_slave/testbench.h                                            |
+|  117 | ../cycle_master_slave/testbench.cpp                                          |
+|  576 | ../cycle_master_slave/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp |
+|   59 | ../cycle_master_slave/wb_master.cpp                                          |
+|   56 | ../cycle_master_slave/wb_slave.cpp                                           |
+|   95 | ../cycle_master_slave/main.cpp                                               |
+|   47 | ../cycle_master_slave/wb_master.h                                            |
+|   44 | ../cycle_master_slave/wb_slave.h                                             |
+| 1039 | total                                                                        |
+
+** execution
+Execution and results of the cycle RTL-similar model.
+
+#+BEGIN_SRC shell :exports both
+../cycle_master_slave/bin/cycle_master_slave
+#+END_SRC
+
+#+RESULTS:
+|         |                |            |            |        |           |      |          |           |    |                                |   |    |
+| Info:   | (I702)         | default    | timescale  | unit   | used      | for  | tracing: |         1 | ps | (cycle_master_slave_trace.vcd) |   |    |
+| Test    | wishbone       | bus        | with       | tests: | 1000000   |      |          |           |    |                                |   |    |
+| Run     | with           | seed:      | 1554812767 |        |           |      |          |           |    |                                |   |    |
+|         |                |            |            |        |           |      |          |           |    |                                |   |    |
+| Info:   | (I704)         | VCD        | delta      | cycle  | tracing   | with | pseudo   | timesteps | (1 | unit):                         | 1 | ps |
+| Time:   | 58532          | ms         |            |        |           |      |          |           |    |                                |   |    |
+| Check   | Logfile        | ...        |            |        |           |      |          |           |    |                                |   |    |
+| End     | of             | test       | with       | 0      | Error(s)! |      |          |           |    |                                |   |    |
+| Occured | Deltas:        | 80784850   |            |        |           |      |          |           |    |                                |   |    |
+|         |                |            |            |        |           |      |          |           |    |                                |   |    |
+| Info:   | /OSCI/SystemC: | Simulation | stopped    | by     | user.     |      |          |           |    |                                |   |    |
+
+** trace file
+The trace file shows the correct signals and Handshake of the
+Testbench, Master and Slave. The file is very big when logging 1000000
+transactions.
+
+[[./cycle_wave.png]]
+
+* TLM Block Model
+The TLM Block Model can be controled via Definitios if it's should
+simulate acurate timing or loosly timed.
+
+** LOC
+
+#+BEGIN_SRC shell :exports results
+wc -l ../tlm_block_master_slave/*.cpp
+wc -l ../tlm_block_master_slave/*.h
+#+END_SRC
+
+#+RESULTS:
+|   21 | ../tlm_block_master_slave/main.cpp                     |
+|   17 | ../tlm_block_master_slave/bus_spec.h                   |
+|  252 | ../tlm_block_master_slave/master.h                     |
+|  113 | ../tlm_block_master_slave/slave.h                      |
+| 1047 | ../tlm_block_master_slave/tlm2_base_protocol_checker.h |
+|   35 | ../tlm_block_master_slave/top.h                        |
+| 1464 | total                                                  |
+
+** execution
+Execute once loosly timed and once acurate timed.
+
+*** loosly
+The loosly timed model accumulates the wait time and does one wait
+after the simulation of all transactions.
+
+#+BEGIN_SRC shell :exports both
+../tlm_block_master_slave/bin/tlm_block_master_slave
+#+END_SRC
+
+#+RESULTS:
+| Run     | with           | Seed:      | 1554839498 |    |           |
+| Loosly  | Timed          | Model!     |            |    |           |
+| Time:   | 1300           | ms         |            |    |           |
+| Check   | Logfile        | ...        |            |    |           |
+| End     | of             | test       | with       |  0 | Error(s)! |
+| Occured | Deltas:        | 1          |            |    |           |
+|         |                |            |            |    |           |
+| Info:   | /OSCI/SystemC: | Simulation | stopped    | by | user.     |
+
+*** acurate
+The acurate timed model waits after every transaction a random number
+of wait states to simulate a busy slave.
+
+#+BEGIN_SRC shell :exports both
+../tlm_block_master_slave/bin/tlm_block_master_slave
+#+END_SRC
+
+#+RESULTS:
+| Run     | with           | Seed:      | 1554839525 |    |           |
+| Acurate | Timed          | Model!     |            |    |           |
+| Time:   | 1597           | ms         |            |    |           |
+| Check   | Logfile        | ...        |            |    |           |
+| End     | of             | test       | with       |  0 | Error(s)! |
+| Occured | Deltas:        | 2000000    |            |    |           |
+|         |                |            |            |    |           |
+| Info:   | /OSCI/SystemC: | Simulation | stopped    | by | user.     |
+
+
+* TLM Nonblock Model
+The nonblock Model uses different functions to simulate more than one
+transaction at a time. Which is not used in our case. The
+Testbench/Master always does one transaction at a time.
+
+** LOC
+
+#+BEGIN_SRC shell :exports both
+find ../tlm_nonblock_master_slave/ -type f \( -name \*.cpp -o -name \*.h \) | xargs wc -l
+#+END_SRC
+
+#+RESULTS:
+|   47 | ../tlm_nonblock_master_slave/testbench.h                                            |
+|  237 | ../tlm_nonblock_master_slave/testbench.cpp                                          |
+|  576 | ../tlm_nonblock_master_slave/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp |
+| 1054 | ../tlm_nonblock_master_slave/tlm2_base_protocol_checker.h                           |
+|   80 | ../tlm_nonblock_master_slave/main.cpp                                               |
+|  265 | ../tlm_nonblock_master_slave/slave.h                                                |
+|   88 | ../tlm_nonblock_master_slave/memory_manager.h                                       |
+|    6 | ../tlm_nonblock_master_slave/globals.h                                              |
+|  260 | ../tlm_nonblock_master_slave/master.h                                               |
+| 2613 | total                                                                               |
+
+
+** execution
+Displaying the results of the nonblock model which is different
+implemented compared to the other models.
+
+#+BEGIN_SRC shell :exports both
+../tlm_nonblock_master_slave/bin/tlm_nonblock_master_slave
+#+END_SRC
+
+#+RESULTS:
+| STEP    |                |               |            |         |           |     |          |   |    |                                 |
+| Test    | tlm_nb         | bus           | with       | tests:  | 1000000   |     |          |   |    |                                 |
+| Run     | with           | seed:         | 1554839912 |         |           |     |          |   |    |                                 |
+|         |                |               |            |         |           |     |          |   |    |                                 |
+| Info:   | (I702)         | default       | timescale  | unit    | used      | for | tracing: | 1 | ps | (tlm_nb_master_slave_trace.vcd) |
+| Time:   | 10959          | [ms]          | at         | LT-TEST |           |     |          |   |    |                                 |
+| Cycles: | 9073734        | [deltacycles] | at         | LT-TEST |           |     |          |   |    |                                 |
+| Time:   | 13855          | [ms]          | at         | AT-TEST |           |     |          |   |    |                                 |
+| Cycles: | 18074309       | [deltacycles] | at         | AT-TEST |           |     |          |   |    |                                 |
+| Check   | Logfile        | ...           |            |         |           |     |          |   |    |                                 |
+| End     | of             | test          | with       | 0       | Error(s)! |     |          |   |    |                                 |
+|         |                |               |            |         |           |     |          |   |    |                                 |
+| Info:   | /OSCI/SystemC: | Simulation    | stopped    | by      | user.     |     |          |   |    |                                 |
+
+* Summary
+The Performance Boost of abstraction of Hardware and less Delta Cycles
+is very heavy. Compared to Unix is Windows very slow on Simulation and
+in general :D. 
+
+The LT Models compared to the AT Models are quit similar the
+performance boost is not that high compared to cycle simulation, only
+a few milliseconds.
+
+- use tlm abstraction
+- unix performance
+

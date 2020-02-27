@@ -1,0 +1,18 @@
+#+Author: Christoph Viehboeck
+#+TITLE: emacs configuration cviehboe
+#+EMAIL: s1510306040@students.fh-hagenberg.at
+#+DATE:  2018-07-12
+#+OPTIONS: tex:t latex:t tex:verbatim
+#+OPTIONS: ':t -:t toc:nil
+
+* Links
+useful links for researching.
+
+** systemc
+guide to systemc, how to use the c++ extension lib.
+http://www.doulos.com/knowhow/systemc/
+
+** tlm
+transaction level model. how to create synthesis out of systemc.
+https://www.doulos.com/knowhow/systemc/tlm2/
+

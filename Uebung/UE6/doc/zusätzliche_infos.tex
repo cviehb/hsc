@@ -1,0 +1,67 @@
+% Created 2019-05-17 Fri 09:23
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Christoph Viehboeck}
+\date{$\backslash$today}
+\title{HSC Infos zu UE6}
+\hypersetup{
+ pdfauthor={Christoph Viehboeck},
+ pdftitle={HSC Infos zu UE6},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 27.0.50 (Org mode 9.2.3)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+
+\section{Interrupts}
+\label{sec:orgb091a5f}
+
+\begin{itemize}
+\item Hinzufügen eines Interrupts in den Cordic Core
+\item HLS Synthese mit Interrupt
+\item SC\textsubscript{Thread} sensitiv auf bool Leitung
+\item Interrupt muss auch rückgesetzt werden
+\item IRQ Handling
+\item Design Erklärung
+\end{itemize}
+
+\section{Firmware}
+\label{sec:org16c54db}
+
+Handling der Interrupts in der Firmware soll gleich dem des Timers
+erfolgen. Daher sollten wie beschrieben die Funktionen implementiert
+werden.
+
+\begin{itemize}
+\item Aufbau der FW als wenn diese auf HW läuft
+\item Alle Strukturen Schnittstellen gleich
+\item Basisadressen
+\end{itemize}
+
+Einfacher Austausch der API wenn VP fertig ist und auf der HW
+verwendet werden kann.
+
+\begin{itemize}
+\item Naming: X<instance>\_<function>
+\item Error Handling für die Berechnung 
+\begin{itemize}
+\item Erweiterung Rückgabewert
+\item Interrupt wait loop
+\end{itemize}
+\end{itemize}
+\end{document}

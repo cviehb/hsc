@@ -1,0 +1,100 @@
+% Created 2019-04-09 Tue 14:34
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Christoph Viehboeck, Martin Schram}
+\date{2018-07-12}
+\title{Documentation Model}
+\hypersetup{
+ pdfauthor={Christoph Viehboeck, Martin Schram},
+ pdftitle={Documentation Model},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 27.0.50 (Org mode 9.1.9)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+
+\section{Allgemein}
+\label{sec:org3bb1837}
+
+\subsection{Cycle Model}
+\label{sec:org36a478c}
+Lines of Code from Cycle Model. This model represents an equivalent
+RTL Model with full timing requirements. All the transactions are done
+random with random wait and access timings.
+
+\begin{center}
+\begin{tabular}{rl}
+95 & ../cycle\_master\_slave/main.cpp\\
+111 & ../cycle\_master\_slave/testbench.cpp\\
+59 & ../cycle\_master\_slave/wb\_master.cpp\\
+56 & ../cycle\_master\_slave/wb\_slave.cpp\\
+321 & total\\
+44 & ../cycle\_master\_slave/testbench.h\\
+47 & ../cycle\_master\_slave/wb\_master.h\\
+44 & ../cycle\_master\_slave/wb\_slave.h\\
+135 & total\\
+\end{tabular}
+\end{center}
+
+\subsubsection{execution}
+\label{sec:org65770ac}
+Execution and results of the cycle RTL-similar model.
+
+\lstset{language=shell,label= ,caption= ,captionpos=b,numbers=none}
+\begin{lstlisting}
+../cycle_master_slave/bin/cycle_master_slave
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{lllllllllllrl}
+ &  &  &  &  &  &  &  &  &  &  &  & \\
+Info: & (I702) & default & timescale & unit & used & for & tracing: & 1 & ps & (cycle\_master\_slave\_trace.vcd) &  & \\
+Test & wishbone & bus & with & tests: & 1000000 &  &  &  &  &  &  & \\
+Run & with & seed: & 1554812767 &  &  &  &  &  &  &  &  & \\
+ &  &  &  &  &  &  &  &  &  &  &  & \\
+Info: & (I704) & VCD & delta & cycle & tracing & with & pseudo & timesteps & (1 & unit): & 1 & ps\\
+Time: & 58532 & ms &  &  &  &  &  &  &  &  &  & \\
+Check & Logfile & \ldots{} &  &  &  &  &  &  &  &  &  & \\
+End & of & test & with & 0 & Error(s)! &  &  &  &  &  &  & \\
+Occured & Deltas: & 80784850 &  &  &  &  &  &  &  &  &  & \\
+ &  &  &  &  &  &  &  &  &  &  &  & \\
+Info: & /OSCI/SystemC: & Simulation & stopped & by & user. &  &  &  &  &  &  & \\
+\end{tabular}
+\end{center}
+
+\subsection{TLM Block Model}
+\label{sec:orgb9f621c}
+The TLM Block Model can be controled via Definitios if it's should
+simulate acurate timing or loosly timed.
+
+\begin{center}
+\begin{tabular}{rl}
+21 & ../tlm\_block\_master\_slave/main.cpp\\
+17 & ../tlm\_block\_master\_slave/bus\_spec.h\\
+252 & ../tlm\_block\_master\_slave/master.h\\
+113 & ../tlm\_block\_master\_slave/slave.h\\
+1047 & ../tlm\_block\_master\_slave/tlm2\_base\_protocol\_checker.h\\
+35 & ../tlm\_block\_master\_slave/top.h\\
+1464 & total\\
+\end{tabular}
+\end{center}
+
+\subsubsection{execution}
+\label{sec:orgcb57ba9}
+Execution of the results.
+\end{document}

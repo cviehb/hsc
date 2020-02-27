@@ -1,0 +1,51 @@
+###########################################################################################
+# Name:		Martin Steiger
+# Modified:	13.03.2019
+# Desc.:	Makefile for SystemC projects
+#
+# SystemC Startup: https://www.electrobucket.com/systemc/getting-started-with-systemc/
+###########################################################################################
+
+# SystemC installation directory
+SYSTEMC_HOME = /usr/local/systemc-2.3.3
+CXX ?= g++
+
+# paths: source, include and object directory #
+SRCDIR = src
+INCDIR = include
+OBJDIR = obj
+
+# executable name # 
+BIN_NAME = run
+
+# extensions #
+SRC_EXT = cpp
+
+# code lists #
+# Find all source files in the source directory, sorted by
+# most recently modified
+SOURCES = $(shell find $(SRCDIR) -name '*.$(SRC_EXT)' | sort -k 1nr | cut -f2-)
+
+# flags #
+COMPILE_FLAGS = -std=c++11 -Wall -Wextra -g
+
+# include directories #
+INCLUDES = -I. -I $(INCDIR)/ -I /usr/local/include -I $(SYSTEMC_HOME)/include 
+1
+# libraries #
+LIBS = -L. -L$(SYSTEMC_HOME)/lib64-linux64 -Wl,-rpath=$(SYSTEMC_HOME)/lib64-linux64
+LDLIBS = -lsystemc -lm
+
+SNMSDIR =  $(basename $(SOURCES))
+NMS = $(notdir $(SNMSDIR))
+OBJS = $(addsuffix .o, $(NMS))
+OBJECTS = $(addprefix $(OBJDIR)/, $(OBJS)) 
+all:
+	mkdir -p $(OBJDIR)
+	for file in $(NMS) ; do \
+		$(CXX) -c $(INCLUDES) $(LIBS) $(SRCDIR)/$$file.cpp -o $(OBJDIR)/$$file.o $(LDLIBS); \
+	done
+	$(CXX) $(COMPILE_FLAGS) $(INCLUDES) $(LIBS) -o $(BIN_NAME) $(OBJECTS) $(LDLIBS)
+
+clean:
+	rm -f $(OBJECTS)

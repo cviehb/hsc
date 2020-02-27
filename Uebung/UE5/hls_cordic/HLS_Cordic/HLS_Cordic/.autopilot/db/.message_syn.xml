@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Messages>
+	<Message severity="INFO" prefix="[SCHED 204-61]" key="SCHED_PIPELINING_STATUS_631" tag="SCHEDULE" content="Option &apos;relax_ii_for_timing&apos; is enabled, will increase II to preserve clock frequency constraints."/>
+	<Message severity="INFO" prefix="[HLS 200-10]" key="HLS_10_1312" tag="" content="Analyzing design file &apos;cc_cordicModule_fixed.cpp&apos; ..."/>
+	<Message severity="WARNING" prefix="[HLS 200-40]" key="HLS_40_1378" tag="" content="In file included from cc_cordicModule_fixed.cpp:1:
+In file included from ./cc_cordicModule_fixed.h:7:
+In file included from ./bus_spec.h:4:
+In file included from /opt/Xilinx/Vivado/2018.3/lnx64/tools/gcc/lib/gcc/x86_64-unknown-linux-gnu/4.6.3/../../../../include/c++/4.6.3/array:34:
+/opt/Xilinx/Vivado/2018.3/lnx64/tools/gcc/lib/gcc/x86_64-unknown-linux-gnu/4.6.3/../../../../include/c++/4.6.3/bits/c++0x_warning.h:32:2: error: This file requires compiler and library support for the upcoming ISO C++ standard, C++0x. This support is currently experimental, and must be enabled with the -std=c++0x or -std=gnu++0x compiler options.
+#error This file requires compiler and library support for the upcoming \
+ ^
+In file included from cc_cordicModule_fixed.cpp:1:
+In file included from ./cc_cordicModule_fixed.h:7:
+./bus_spec.h:5:10: fatal error: &apos;sysc/datatypes/fx/sc_fixed.h&apos; file not found
+#include &lt;sysc/datatypes/fx/sc_fixed.h&gt;
+         ^
+2 errors generated."/>
+	<Message severity="INFO" prefix="[Common 17-206]" key="HLS_150_1932" tag="" content="Exiting vivado_hls at Thu May 30 13:06:51 2019..."/>
+</Messages>

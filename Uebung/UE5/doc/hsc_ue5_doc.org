@@ -1,0 +1,99 @@
+#+Author: Christoph Viehboeck, Martin Schram
+#+TITLE: HSC UE5
+#+EMAIL: s1810567023@students.fh-hagenberg.at
+
+#+OPTIONS: tex:t latex:t tex:verbatim
+#+OPTIONS: ':t -:t toc:nil
+
+#+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+REVEAL_HLEVEL: 1
+#+REVEAL_TRANS: fade
+#+REVEAL_THEME: simple
+
+* Cordic Refinement
+
+Implementierung des Cordics VHDL-Like. Realisierung durch
+Clocked-Thread und internen States. Anpassung des arkustangens mittels
+einer LUT. Diese wurde mit nachfolgender Funktion berechnet.
+
+#+BEGIN_SRC emacs-lisp :export src
+(defun calculate_atan_times (num)
+  (interactive)
+  (let ((i 1)
+        (val 1.0))
+    (while (< i (+ num 1))
+      (insert "\n")
+      (insert (number-to-string (atan val)))
+      (insert ",")
+      (setq val (/ val 2.0))
+      (setq i (+ i 1))
+      )))
+#+END_SRC
+
+Für eine noch höhere Genauigkeit, da Lisp intern mit max 12 bit
+default rechnet. 
+
+#+BEGIN_SRC c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+
+int main(int argc, char *argv[])
+{
+  if (argc != 2) {
+    printf("Usage: calc_atan <times>");
+    return 1;
+  }
+  
+  int len = atoi(argv[1]);
+  double div = 1.0;
+  for(int i = 0; i < len; i++) {
+    printf("%.32f,\n", atan(div));
+    div = div / 2;
+  }
+  
+  return 0;
+}
+#+END_SRC
+
+Der K-Faktor ist nur von der Anzahl der Iteration abhängig und kann
+daher in der Hardware als Konstante verwendet werden, da die
+Berechnung erst in der Letzten Iterationsschleife erfolgt.\\
+
+Interne Repräsentation der Festkommaarithmetik zur Berechnung der
+geforderten Werte.
+
+#+BEGIN_SRC c
+  /* fixed precision */
+  static uint8_t const frac = 21;
+  static uint8_t const mant = 2;
+  typedef sc_dt::sc_fixed<frac, mant> fx_t;
+#+END_SRC
+
+Damit lässt sich die geforderte Genauigkeit in der gegebenen
+Abweichung realisieren. Getestet wurde mit verschiedenen Random
+Werten, die mit dem Cordic berechnet wurden und per Golden Model und
+dem BHV Modell verifiziert werden.
+
+#+BEGIN_SRC c++
+  /* fixed precision */
+  static uint8_t const frac = 21;
+  static uint8_t const mant = 2;
+  typedef sc_dt::sc_fixed<frac, mant> fx_t;
+#+END_SRC
+
+* HLS Synthese
+
+Reset und Takt wurden definiert.
+
+#+BEGIN_SRC c++
+    SC_CTHREAD(compute, clk.pos());
+    async_reset_signal_is(nrst, false);
+#+END_SRC
+
+* Golden Modell
+
+Es wurde verifiziert mit dem BHV Modell und gegen die Funktionen der
+Math Library um die Genauigkeit noch zu erhöhen.
+

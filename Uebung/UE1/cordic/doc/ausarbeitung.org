@@ -1,0 +1,14 @@
+#+Author: Christoph Viehboeck
+#+TITLE: Cordic Fragen
+
+* Fragen
+Fragen aus der Übung 1.
+
+** Welche Genauigkeit kann erreicht werden? 
+Grundsätzlich die maximale Auflösung des Datentyps.
+
+** Ist eine Erhöhung der Iterationen unter Berücksichtigung der Schnittstelle sinnvoll?
+Pro Iteration wird ein bit Genauigkeit
+erhöht. http://www.andraka.com/files/crdcsrvy.pdf Daher wäre eine
+Erhöhung nicht sinnvoll.
+

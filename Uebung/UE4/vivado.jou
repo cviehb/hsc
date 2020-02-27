@@ -1,0 +1,16 @@
+#-----------------------------------------------------------
+# Vivado v2018.3 (64-bit)
+# SW Build 2405991 on Thu Dec  6 23:36:41 MST 2018
+# IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
+# Start of session at: Thu May 30 17:01:12 2019
+# Process ID: 25566
+# Current directory: /home/christoph/FH_Hagenberg/Semester8/HSC8/hsc8_repo/Uebung/UE4
+# Command line: vivado vivado/led_counter/led_counter.xpr
+# Log file: /home/christoph/FH_Hagenberg/Semester8/HSC8/hsc8_repo/Uebung/UE4/vivado.log
+# Journal file: /home/christoph/FH_Hagenberg/Semester8/HSC8/hsc8_repo/Uebung/UE4/vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project vivado/led_counter/led_counter.xpr
+update_compile_order -fileset sources_1
+launch_sdk -workspace /home/christoph/FH_Hagenberg/Semester8/HSC8/hsc8_repo/Uebung/UE4/vivado/led_counter/led_counter.sdk -hwspec /home/christoph/FH_Hagenberg/Semester8/HSC8/hsc8_repo/Uebung/UE4/vivado/led_counter/led_counter.sdk/led_design_wrapper.hdf
+close_project
